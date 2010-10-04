@@ -1,11 +1,7 @@
 require 'asset_bundler'
 require 'active_support'
 
-class AssetBundler::JavascriptsController < ActionController::Metal
-  include ActionController::Rendering
-  
-  unloadable
-  
+class AssetBundler::JavascriptsController < ActionController::Base
   append_view_path Rails.root.join('app/assets/javascripts')
   
   def controller_path
