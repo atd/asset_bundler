@@ -1,5 +1,4 @@
 module AssetBundler
-  VERSION = '0.0.1'
-
-  autoload :Engine, 'asset_bundler/engine'
+  require 'asset_bundler/version'
+  require 'asset_bundler/engine'
 end

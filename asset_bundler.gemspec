@@ -1,4 +1,4 @@
-require File.expand_path('../lib/asset_bundler', __FILE__)
+require File.expand_path('../lib/asset_bundler/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'asset_bundler'
