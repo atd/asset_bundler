@@ -1,13 +1,13 @@
 class AssetBundler::JavascriptsController < AssetBundler::AssetsController
   self.view_paths = [
-    Rails.root.join('app/assets/javascripts'),
-    AssetBundler::Engine.root.join('app/assets/javascripts')
+    Rails.root.join('app/assets'),
+    AssetBundler::Engine.root.join('app/assets')
   ]
   
   respond_to :js
   
   def controller_path
-    'assets/javascripts'
+    'javascripts'
   end
   
   protected

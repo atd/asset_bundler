@@ -1,13 +1,13 @@
 class AssetBundler::StylesheetsController < AssetBundler::AssetsController
   self.view_paths = [
-    Rails.root.join('app/assets/stylesheets'),
-    AssetBundler::Engine.root.join('app/assets/stylesheets')
+    Rails.root.join('app/assets'),
+    AssetBundler::Engine.root.join('app/assets')
   ]
   
   respond_to :css
   
   def controller_path
-    'assets/stylesheets'
+    'stylesheets'
   end
   
   protected

@@ -10,7 +10,7 @@ class AssetBundler::AssetsController < ActionController::Base
   end
   
   def show
-    render :template => params[:path]
+    render :action => params[:path]
   end
   
   protected
