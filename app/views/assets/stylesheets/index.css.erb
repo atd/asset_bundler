@@ -1,1 +1,3 @@
-<%= join_asset_file_contents compute_stylesheet_paths([@expansion], true) %>
+<% compute_stylesheet_paths([@expansion], true).each do |stylesheet| %>
+  <%= render :template => stylesheet %>
+<% end %>

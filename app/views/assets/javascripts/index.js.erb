@@ -1,1 +1,3 @@
-<%= join_asset_file_contents compute_javascript_paths([@expansion], true) %>
+<% compute_javascript_paths([@expansion], true).each do |javascript| %>
+  <%= render :template => javascript %>
+<% end %>
