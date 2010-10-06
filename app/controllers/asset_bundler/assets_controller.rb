@@ -16,8 +16,10 @@ class AssetBundler::AssetsController < ActionController::Base
   protected
   
   def cache!
-    headers['Cache-Control'] = 'public'
-    headers['Expires']       = 1.year.from_now.httpdate
+    if config.perform_caching
+      headers['Cache-Control'] = 'public'
+      headers['Expires']       = 1.year.from_now.httpdate
+    end
   end
   
   def protect_against_dos!
