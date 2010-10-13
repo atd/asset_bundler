@@ -20,6 +20,8 @@ class AssetBundler::AssetsController < ActionController::Metal
     )
   end
   
+  protected
+  
   #
   # Counterintuitively, if caching is enabled, we disable Rails caching of
   # the asset template, and assume that it's being cached above us in the
@@ -33,8 +35,10 @@ class AssetBundler::AssetsController < ActionController::Metal
     { :cache => !config.perform_caching }
   end
   
-  protected
-  
+  #
+  # Expands +path+ into its corresponding assets if it's a registered
+  # expansion. Otherswise, returns +path+.
+  #
   def expansion_for(path)
     expansion?(path.to_s) ? expansions[path.to_sym] : path
   end
