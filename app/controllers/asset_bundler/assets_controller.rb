@@ -14,10 +14,7 @@ class AssetBundler::AssetsController < ActionController::Metal
     headers['Cache-Control'] = 'public'
     headers['Expires']       = 1.year.from_now.httpdate
     
-    render(
-      :once   => self.expansion_for(params[:path]),
-      :prefix => self.controller_path
-    )
+    render File.join(self.controller_path, self.expansion_for(params[:path]))
   end
   
   protected
