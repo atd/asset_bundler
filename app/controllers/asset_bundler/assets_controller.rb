@@ -14,7 +14,15 @@ class AssetBundler::AssetsController < ActionController::Metal
     headers['Cache-Control'] = 'public'
     headers['Expires']       = 1.year.from_now.httpdate
     
-    render File.join(self.controller_path, self.expansion_for(params[:path]))
+    begin
+      render File.join(self.controller_path, self.expansion_for(params[:path]))
+    rescue ActionView::MissingTemplate
+      public_file = File.join(Rails.root, 'public', request.path)
+
+      File.exists?(public_file) ?
+        render(File.read(public_file)) :
+        raise(ActionController::RoutingError, "No route matches #{ request.path.inspect }")
+    end
   end
   
   protected
