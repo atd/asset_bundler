@@ -13,15 +13,12 @@ class AssetBundler::AssetsController < ActionController::Metal
     # invalidate the browser cache with a cache-busting query string.
     headers['Cache-Control'] = 'public'
     headers['Expires']       = 1.year.from_now.httpdate
-    
-    begin
-      render File.join(self.controller_path, self.expansion_for(params[:path]))
-    rescue ActionView::MissingTemplate
-      public_file = File.join(Rails.root, 'public', request.path)
 
-      File.exists?(public_file) ?
-        render(File.read(public_file)) :
-        raise(ActionController::RoutingError, "No route matches #{ request.path.inspect }")
+    begin
+      go_render(File.join(self.controller_path, self.expansion_for(params[:path])))
+    rescue
+      raise(ActionController::RoutingError,
+            "No route matches #{ request.path.inspect }")
     end
   end
   
@@ -46,5 +43,13 @@ class AssetBundler::AssetsController < ActionController::Metal
   #
   def expansion_for(path)
     expansion?(path.to_s) ? expansions[path.to_sym] : path
+  end
+
+  #
+  # Renders text file
+  # Must be overwrited for binary data
+  #
+  def go_render(path)
+    render path
   end
 end

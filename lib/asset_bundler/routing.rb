@@ -26,6 +26,17 @@ module ActionDispatch::Routing::Mapper::Assets
       match "#{route}/*path.:format", :to => 'assets/stylesheets#go'
     end
   end
+
+  #
+  # Renders image assets whenever +paths+ are matched. Defaults to
+  # recognizing routes under '/images' if no +paths+ are given.
+  #
+  def images(*paths)
+    paths.push '/images' if paths.empty?
+    paths.each do |route|
+      match "#{route}/*path.:format", :to => 'assets/images#go'
+    end
+  end
 end
 
 class ActionDispatch::Routing::Mapper
