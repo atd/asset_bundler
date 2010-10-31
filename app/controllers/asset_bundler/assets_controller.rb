@@ -5,8 +5,9 @@ require 'action_controller/metal'
 class AssetBundler::AssetsController < ActionController::Metal
   include ActionController::Rendering
   include ActionController::MimeResponds
+  include ActionController::Streaming
   
-  self.view_paths = %w{app}
+  self.view_paths = AssetBundler.paths
   
   def go
     # Always cache resources. It's the responsibility of the asset tag to
@@ -15,7 +16,10 @@ class AssetBundler::AssetsController < ActionController::Metal
     headers['Expires']       = 1.year.from_now.httpdate
 
     begin
-      go_render(File.join(self.controller_path, self.expansion_for(params[:path])))
+      template = find_template(File.join(self.controller_name, self.expansion_for(params[:path])))
+      send_file template.identifier,
+                :type => formats.first,
+                :disposition => 'inline'
     rescue
       raise(ActionController::RoutingError,
             "No route matches #{ request.path.inspect }")
@@ -43,13 +47,5 @@ class AssetBundler::AssetsController < ActionController::Metal
   #
   def expansion_for(path)
     expansion?(path.to_s) ? expansions[path.to_sym] : path
-  end
-
-  #
-  # Renders text file
-  # Must be overwrited for binary data
-  #
-  def go_render(path)
-    render path
   end
 end
